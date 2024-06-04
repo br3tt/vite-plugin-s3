@@ -9,6 +9,7 @@ import mapValues from 'lodash/mapValues'
 import type { File, Options } from './types'
 
 import { logResult } from './log'
+import { resolve } from 'path'
 
 import {
   DEFAULT_UPLOAD_OPTIONS,
@@ -31,7 +32,7 @@ export default class Uploader {
 
     this.client = new S3(this.options.clientConfig)
 
-    this.directory = this.options.directory ? this.options.directory : `${this.vite.root}/${this.vite.build.outDir}`
+    this.directory = this.options.directory ? this.options.directory : resolve(this.vite.root, this.vite.build.outDir)
   }
 
   uploadFile(fileName: string, file: string): Promise<PutObjectCommandOutput> {
